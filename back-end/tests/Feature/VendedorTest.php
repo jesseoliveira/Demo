@@ -9,6 +9,9 @@ use Tests\TestCase;
 
 class VendedorTest extends TestCase
 {
+
+    use RefreshDatabase;
+    
     /** @test */
     public function checking_api_request_endpoint_vendedor_list()
     {
@@ -21,10 +24,10 @@ class VendedorTest extends TestCase
     /** @test */
     public function checking_post_api_request_to_register_vendedor()
     {
-
+        $faker = Vendedor::factory()->make();
         $response = $this->post('/api/create/vendedor', [
-            'name'  => 'Laura Nunes',
-            'email' => 'laura@gmail.com'
+            'name'  => $faker->name,
+            'email' => $faker->email
         ]);
 
         $response->assertStatus(200)->assertJson([
@@ -37,19 +40,19 @@ class VendedorTest extends TestCase
     public function checking_post_api_request_to_destroy_register_vendedor()
     {
 
-        $vendedor = (new Vendedor)::first();
+        $faker = Vendedor::factory()->make();
+        $vendedor = new Vendedor;
+        $vendedor->name  = $faker->name;
+        $vendedor->email = $faker->email;
+        $vendedor->save();
 
-        if($vendedor->id > 0){
+        $response = $this->post('/api/delete/vendedor', [
+            'id' => $vendedor->id
+        ]);
 
-            $response = $this->post('/api/delete/vendedor', [
-                'id' => $vendedor->id
-            ]);
-
-            $response->assertStatus(200)->assertJson([
-                'state' => 'SUCCESS',
-            ]);
-
-        }
+        $response->assertStatus(200)->assertJson([
+            'state' => 'SUCCESS',
+        ]);
 
     }
 }

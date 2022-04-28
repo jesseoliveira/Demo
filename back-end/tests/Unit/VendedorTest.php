@@ -2,11 +2,14 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Vendedor;
+use Tests\TestCase;
 
 class VendedorTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function check_if_vendedor_columns_is_correct()
     {
@@ -21,9 +24,8 @@ class VendedorTest extends TestCase
     /** @test */
     public function check_if_vendedor_creatinig_correct()
     {
-
+        
         $faker = Vendedor::factory()->make();
-
         $vendedor = new Vendedor;
         $vendedor->name  = $faker->name;
         $vendedor->email = $faker->email;

@@ -5,6 +5,10 @@ namespace Tests\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
+use Tests\TestCase;
+use App\Models\Vendedor;
+use App\Models\Config;
+use App\Models\Venda;
 
 class FontendTest extends DuskTestCase
 {
@@ -23,13 +27,13 @@ class FontendTest extends DuskTestCase
     /** @test */
     public function check_if_create_new_vendedor_is_working()
     {
-
         $this->frontend = config('app.frontend');
         $this->browse(function (Browser $browser) {
+            $faker = Vendedor::factory()->make();
             $browser->visit($this->frontend)
                     ->press('Cadastrar Vendedor')
-                    ->type('name','Karem Nunes')
-                    ->type('email','karem@gmail.com')
+                    ->type('name', $faker->name)
+                    ->type('email', $faker->email)
                     ->press('Salvar');
         });
     }
@@ -51,13 +55,13 @@ class FontendTest extends DuskTestCase
     /** @test */
     public function check_if_create_new_venda_is_working()
     {
-
         $this->frontend = config('app.frontend');
         $this->browse(function (Browser $browser) {
+            $faker = Venda::factory()->make();
             $browser->visit($this->frontend)
                     ->press('Lançar Nova Venda')
-                    ->select('vendedor',1)
-                    ->type('valor',200)
+                    ->select('vendedor',$faker->vendedor_id)
+                    ->type('valor',$faker->valor)
                     ->press('Salvar');
         });
     }

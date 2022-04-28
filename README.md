@@ -7,12 +7,12 @@ Tray - Prova Prática
 - Composer Instalado
 
 ## HOW TO
-01 - Clonar o projeto "git clone https://github.com/jesseoliveira/tray-teste.git"
-02 - Acessar o diretorio "back-end"
-03 - Executar: composer install
-04 - Editar e configure o arquivo .env
-05 - Executar: php artisan serve
-06 - Acessar o "front-end" pelo navegador
+- Clonar o projeto "git clone https://github.com/jesseoliveira/tray-teste.git"
+- Acessar o diretorio "back-end"
+- Executar: composer install
+- Editar e configure o arquivo .env
+- Executar: php artisan serve
+- Acessar o "front-end" pelo navegador
 
 ## PAGINA INICICAL
 ![Screenshot](Screenshot_1.png)
@@ -20,8 +20,8 @@ Tray - Prova Prática
 ## NOVO VENDEDOR
 ![Screenshot](Screenshot_2.png)
 
-NOVA VENDA
+## NOVA VENDA
 ![Screenshot](Screenshot_4.png)
 
-VENDEDORES CADASTRADOS
+## VENDEDORES CADASTRADOS
 ![Screenshot](Screenshot_3.png)

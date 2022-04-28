@@ -1,5 +1,5 @@
-# Tray - Teste
-Tray - Prova Prática
+# TRAY - TESTE
+Desenvolver uma API para cadastro de vendas para vendedores e calcular a comissão dessas vendas (a comissão será de 8.5% sobre o valor da venda)
 
 ## REQUISITOS
 - PHP >= 7.3
@@ -9,8 +9,8 @@ Tray - Prova Prática
 ## HOW TO
 - Clonar o projeto "git clone https://github.com/jesseoliveira/tray-teste.git"
 - Acessar o diretorio "back-end"
+- Editar e configurar o arquivo .env (atenção na parte de email)
 - Executar: composer install
-- Editar e configure o arquivo .env
 - Executar: php artisan serve
 - Acessar o "front-end" pelo navegador
 
@@ -23,5 +23,8 @@ Tray - Prova Prática
 ## NOVA VENDA
 ![Screenshot](Screenshot_4.png)
 
-## VENDEDORES CADASTRADOS
-![Screenshot](Screenshot_3.png)
+## VENDA CADASTRADA COM SUCESSO
+![Screenshot](Screenshot_5.png)
+
+## VENDEDOR CADASTRADO COM SUCESSO
+![Screenshot](Screenshot_6.png)

@@ -164,43 +164,6 @@
 
             var api = $('#api').val();
 
-            $('#btn-sendmail').click(function(){
-                bootbox.confirm({
-                    message: "<h4>ATENÇÃO</h4>Deseja enviar email para a gerência com a relação das vendas do dia?",
-                    buttons: {
-                        confirm: {
-                            label: 'Sim',
-                            className: 'btn-primary'
-                        },
-                        cancel: {
-                            label: 'Não',
-                            className: 'btn-danger'
-                        }
-                    },
-                    callback: function (result) {
-                        if(result){
-                            $.ajax({
-                                method: "POST",
-                                url: api+"sendmail",
-                                cache: false
-                            }).done(function(res) {
-                                if(res.state == 'ERROR'){
-                                    var error = '<b>ERROR</b>';
-                                    $.each(res.errors, function(i, item) {
-                                        error += '<li>'+item+'</li>';
-                                    });
-                                    bootbox.alert(error);
-                                }else{
-                                    bootbox.alert('<h5>Email enviado com sucesso!</h5>');
-                                }
-                            }).fail(function() {
-                                bootbox.alert('Aconteceu algo inesperado ao salvar este registro!<br>Atualize a pagina (CTRL + F5) e tente novamente, se o problema persistir, entre em contato com o suporte!'); 
-                            });
-                        }
-                    }
-                });
-            });
-
             $('#btn-add-vendedor').click(function(){
                 $('.theme').hide();
                 $('#page-title').text('Novo Vendedor');
@@ -328,13 +291,88 @@
                                     '<td>'+FloatToStr(item.comissao)+'</td>'+
                                     '<td>'+FloatToStr(item.valor)+'</td>'+
                                     '<td>'+item.created_at+'</td>'+
-                                    '<td><a class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i></a></td>'+
+                                    '<td><button class="btn btn-danger btn-sm btn-remove" data-id="'+item.id+'"><i class="fa-solid fa-xmark"></i></button></td>'+
                                 '</tr>'
                             );
                         });
                     }
                 });
 
+            });
+
+            $('body').on('click','.btn-remove', function(){
+
+                let venda_id = $(this).attr('data-id');
+                if(venda_id > 0){
+                    bootbox.confirm({
+                        message: "<h4>ATENÇÃO</h4>Tem certeza que deseja excluir esta venda?",
+                        buttons: {
+                            confirm: {
+                                label: 'Sim',
+                                className: 'btn-primary'
+                            },
+                            cancel: {
+                                label: 'Não',
+                                className: 'btn-danger'
+                            }
+                        },
+                        callback: function (result) {
+                            if(result){
+                                $.ajax({
+                                    method: "POST",
+                                    url: api+"delete/venda",
+                                    data: {id: venda_id},
+                                    cache: false
+                                }).done(function(res) {
+                                    if(res.state == 'ERROR'){
+                                        bootbox.alert('<h4>ATENÇÃO</h4>'+res.errors);
+                                    }else{
+                                        $('#btn-list-vendas').trigger('click');
+                                        bootbox.alert('<h5>Venda removida com sucesso!</h5>');
+                                    }
+                                }).fail(function() {
+                                    bootbox.alert('Aconteceu algo inesperado ao salvar este registro!<br>Atualize a pagina (CTRL + F5) e tente novamente, se o problema persistir, entre em contato com o suporte!'); 
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    bootbox.alert('ID da venda não informado!');
+                }
+
+            });
+
+            $('#btn-sendmail').click(function(){
+                bootbox.confirm({
+                    message: "<h4>ATENÇÃO</h4>Deseja enviar email para a gerência com a relação das vendas do dia?",
+                    buttons: {
+                        confirm: {
+                            label: 'Sim',
+                            className: 'btn-primary'
+                        },
+                        cancel: {
+                            label: 'Não',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if(result){
+                            $.ajax({
+                                method: "POST",
+                                url: api+"sendmail",
+                                cache: false
+                            }).done(function(res) {
+                                if(res.state == 'ERROR'){
+                                    bootbox.alert('<h4>ERROR</h4>'+res.errors);
+                                }else{
+                                    bootbox.alert('<h5>Email enviado com sucesso!</h5>');
+                                }
+                            }).fail(function() {
+                                bootbox.alert('Aconteceu algo inesperado ao salvar este registro!<br>Atualize a pagina (CTRL + F5) e tente novamente, se o problema persistir, entre em contato com o suporte!'); 
+                            });
+                        }
+                    }
+                });
             });
 
             function Vendedores(type = 'add_vendas'){
@@ -377,6 +415,8 @@
                 });
             }
 
+            
+
         });
 
         // Funções auxiliares
@@ -418,12 +458,8 @@
             valor = valor.toFixed(2).split('.');
             valor[0]  = valor[0].split(/(?=(?:...)*$)/).join('.');
             return n ? '-'+valor.join(',') : valor.join(',');
-        }
-
-        
+        }        
         
     </script>
-
-    
 </body>
 </html>

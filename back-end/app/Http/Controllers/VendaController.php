@@ -152,13 +152,13 @@ class VendaController extends Controller
 
             }else{
 
-                return response()->json(array('state' => 'ERROR', 'errors' => ['Não foi possível excluir este registro, por favor, atualize a página e tente novamente!']));
+                return response()->json(array('state' => 'ERROR', 'errors' => 'Não foi possível excluir este registro, por favor, atualize a página e tente novamente!'));
 
             }
 
         } catch (\Exception $e) {
 
-            return response()->json(array('state' => 'ERROR', 'errors' =>[ $e->getMessage()]));
+            return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
 
         }
 

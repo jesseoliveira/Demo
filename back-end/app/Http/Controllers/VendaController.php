@@ -64,13 +64,13 @@ class VendaController extends Controller
         } catch (\Exception $e) {
 
             if(config('app.debug') == true){
-            
-                return response()->json(array('state' => 'ERROR', 'data' => [], 'errors' => $e->getMessage()));
-            
+
+                return response()->json(array('state' => 'ERROR', 'data' => [], 'errors' => [$e->getMessage()]));
+
             }else{
-            
+
                 return response()->json(array('state' => 'ERROR', 'data' => []));
-            
+
             }
 
         }
@@ -112,15 +112,15 @@ class VendaController extends Controller
         } catch (\Exception $e) {
 
             if(config('app.debug') == true){
-            
-                return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
-            
+
+                return response()->json(array('state' => 'ERROR', 'errors' => [$e->getMessage()]));
+
             }else{
-            
+
                 return response()->json(array('state' => 'ERROR'));
-            
+
             }
-        
+
         }
 
     }
@@ -158,7 +158,7 @@ class VendaController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
+            return response()->json(array('state' => 'ERROR', 'errors' =>[ $e->getMessage()]));
 
         }
 
@@ -171,7 +171,7 @@ class VendaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function sendmail($date = '')
+    public function sendmail()
     {
         try {
 
@@ -191,25 +191,33 @@ class VendaController extends Controller
             $mail->setLanguage('pt_br', base_path('vendor/phpmailer/phpmailer/language'));
             $mail->isHTML(true);
             $mail->CharSet = 'utf-8';
+            $mail->Subject = 'RELATORIO DE VENDAS '.date('d/m/Y');
+            $mail->Body    = view('mail', ['vendas' => $vendas]);
             $mail->addAddress(config('mail.to.address'), config('mail.to.name'));
-            $mail->Subject = 'RELATÓRIO DE VENDAS '.date('Y').' - TRAY';
-            $mail->Body    = view('mail', ['vendas'=>$vendas]);
-            $mail->send();
 
-            return response()->json(array('state' => 'SUCCESS'));
+            if($mail->send()){
 
-        } catch (Exception $e) {            
-            
-            if(config('app.debug') == true){
-            
-                return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
-            
+                return response()->json(array('state' => 'SUCCESS'));
+
             }else{
-            
-                return response()->json(array('state' => 'ERROR'));
-            
+
+                return response()->json(array('state' => 'ERROR', 'errors' => ['Não foi possível enviar o relatório de vendas']));
+
             }
-        
+
+
+        } catch (Exception $e) {
+
+            if(config('app.debug') == true){
+
+                return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
+
+            }else{
+
+                return response()->json(array('state' => 'ERROR'));
+
+            }
+
         }
     }
 

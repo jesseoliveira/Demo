@@ -52,9 +52,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost:8000'),
     'frontend' => env('FRONTEND', 'http://localhost'),
-
     'asset_url' => env('ASSET_URL', null),
 
     /*
@@ -68,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Fortaleza',
 
     /*
     |--------------------------------------------------------------------------

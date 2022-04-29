@@ -53,8 +53,8 @@
                             <span data-feather="bar-chart-2"></span>
                             Listar Vendas
                         </button>
-                    </li>              
-                </ul>            
+                    </li>
+                </ul>
               </div>
             </nav>
 
@@ -65,7 +65,7 @@
                     <h2 id="page-title" class="h2">Selecione no menu ao lado</h2>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
-                            <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paper-plane"></i> Enviar Relatório de Vendas do Dia</button>
+                            <button id="btn-sendmail" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-paper-plane"></i> Enviar Relatório de Vendas do Dia</button>
                         </div>
                     </div>
                 </div>
@@ -113,6 +113,9 @@
                             </tr>
                         </thead>
                         <tbody id="data-vendedores">
+                            <tr>
+                                <td colspan="4" style="text-align: center;">Sem Dados</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -160,7 +163,44 @@
         $(function(){
 
             var api = $('#api').val();
-            
+
+            $('#btn-sendmail').click(function(){
+                bootbox.confirm({
+                    message: "<h4>ATENÇÃO</h4>Deseja enviar email para a gerência com a relação das vendas do dia?",
+                    buttons: {
+                        confirm: {
+                            label: 'Sim',
+                            className: 'btn-primary'
+                        },
+                        cancel: {
+                            label: 'Não',
+                            className: 'btn-danger'
+                        }
+                    },
+                    callback: function (result) {
+                        if(result){
+                            $.ajax({
+                                method: "POST",
+                                url: api+"sendmail",
+                                cache: false
+                            }).done(function(res) {
+                                if(res.state == 'ERROR'){
+                                    var error = '<b>ERROR</b>';
+                                    $.each(res.errors, function(i, item) {
+                                        error += '<li>'+item+'</li>';
+                                    });
+                                    bootbox.alert(error);
+                                }else{
+                                    bootbox.alert('<h5>Email enviado com sucesso!</h5>');
+                                }
+                            }).fail(function() {
+                                bootbox.alert('Aconteceu algo inesperado ao salvar este registro!<br>Atualize a pagina (CTRL + F5) e tente novamente, se o problema persistir, entre em contato com o suporte!'); 
+                            });
+                        }
+                    }
+                });
+            });
+
             $('#btn-add-vendedor').click(function(){
                 $('.theme').hide();
                 $('#page-title').text('Novo Vendedor');
@@ -319,6 +359,9 @@
                         }else
                         if(type == 'list_vendedores'){
                             $('#data-vendedores').html('');
+                            if(res.data.length == 0){
+                                $('#data-vendedores').append('<tr><td colspan="4" style="text-align: center;">Sem Dados</td></tr>');
+                            }
                             $.each(res.data, function(i, item) {
                                 $('#data-vendedores').append(
                                     '<tr>'+

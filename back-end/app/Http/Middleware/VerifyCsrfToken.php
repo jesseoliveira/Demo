@@ -18,5 +18,6 @@ class VerifyCsrfToken extends Middleware
         '/api/list/vendedores',
         '/api/delete/venda',
         '/api/delete/vendedor',
+        '/api/sendmail',
     ];
 }

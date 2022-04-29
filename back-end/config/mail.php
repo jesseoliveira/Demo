@@ -17,68 +17,22 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Mailer Configurations
+    | SMTP Server Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure all of the mailers used by your application plus
-    | their respective settings. Several examples have been configured for
-    | you and you are free to add your own as your application requires.
-    |
-    | Laravel supports a variety of mail "transport" drivers to be used while
-    | sending an e-mail. You will specify which one you are using for your
-    | mailers below. You are free to add additional mailers as required.
-    |
-    | Supported: "smtp", "sendmail", "mailgun", "ses",
-    |            "postmark", "log", "array", "failover"
+    | If your SMTP server requires a username for authentication, you should
+    | set it here. This will get used to authenticate with your server on
+    | connection. You may also set the "password" value below this one.
     |
     */
 
-    'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
-            'auth_mode' => null,
-        ],
+    'driver'     => env('MAIL_DRIVER', 'smtp'),
+    'host'       => env('MAIL_HOST', 'smtp.gmail.com'),
+    'port'       => env('MAIL_PORT', 465),
+    'username'   => env('MAIL_USERNAME', 'seu_email@gmail.com'),
+    'password'   => env('MAIL_PASSWORD', 'sua_senha'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
-        'ses' => [
-            'transport' => 'ses',
-        ],
-
-        'mailgun' => [
-            'transport' => 'mailgun',
-        ],
-
-        'postmark' => [
-            'transport' => 'postmark',
-        ],
-
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -t -i'),
-        ],
-
-        'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
-        ],
-
-        'array' => [
-            'transport' => 'array',
-        ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
-            ],
-        ],
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +47,18 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name'    => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global "To" Address
+    |--------------------------------------------------------------------------
+    */
+
+    'to' => [
+        'address' => env('MAIL_TO_ADDRESS', 'jesseh.oliv@gmail.com'),
+        'name'    => env('MAIL_TO_NAME', 'Jesse Oliveira'),
     ],
 
     /*

@@ -15,7 +15,7 @@ class VendedorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
-    {   
+    {
 
         try {
 
@@ -34,13 +34,13 @@ class VendedorController extends Controller
         } catch (\Exception $e) {
 
             if(config('app.debug') == true){
-            
-                return response()->json(array('state' => 'ERROR', 'data' => [], 'errors' => $e->getMessage()));
-            
+
+                return response()->json(array('state' => 'ERROR', 'data' => [], 'errors' => [$e->getMessage()]));
+
             }else{
-            
+
                 return response()->json(array('state' => 'ERROR', 'data' => []));
-            
+
             }
 
         }
@@ -79,7 +79,7 @@ class VendedorController extends Controller
 
             if(config('app.debug') == true){
 
-                return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
+                return response()->json(array('state' => 'ERROR', 'errors' => [$e->getMessage()]));
             
             }else{
 
@@ -123,7 +123,7 @@ class VendedorController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(array('state' => 'ERROR', 'errors' => $e->getMessage()));
+            return response()->json(array('state' => 'ERROR', 'errors' => [$e->getMessage()]));
 
         }
 

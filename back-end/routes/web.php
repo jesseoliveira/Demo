@@ -26,3 +26,4 @@ Route::post('/api/delete/vendedor', [VendedorController::class, 'destroy']);
 Route::get('/api/list/vendas', [VendaController::class, 'show']);
 Route::post('/api/create/venda', [VendaController::class, 'create']);
 Route::post('/api/delete/venda', [VendaController::class, 'destroy']);
+Route::post('/api/sendmail', [VendaController::class, 'sendmail']);

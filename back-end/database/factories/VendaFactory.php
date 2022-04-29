@@ -13,7 +13,7 @@ class VendaFactory extends Factory
      */
     public function definition()
     {
-        $valor    = mt_rand(1, 4);
+        $valor    = mt_rand(10, 999);
         $comissao = round(($valor*8.5/100),2);
         return [
             'vendedor_id' => $this->faker->randomNumber(),

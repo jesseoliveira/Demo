@@ -38,5 +38,5 @@ Para uma rotina automatica no envio de email, basta adicionar o comando abaixo a
 ## VENDEDOR CADASTRADO COM SUCESSO
 ![Screenshot](Screenshot_6.png)
 
-## EMAIL DE RELATÓRIO DE VENDAS RECEBIDO
+## EMAIL RECEBIDO COM RELATÓRIO DE VENDAS DO DIA
 ![Screenshot](Screenshot_7.png)
